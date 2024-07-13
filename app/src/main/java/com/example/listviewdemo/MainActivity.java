@@ -6,10 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -32,6 +34,21 @@ public class MainActivity extends AppCompatActivity {
 
         CustomAdapter customAdapter = new CustomAdapter(this, name, description, profilerPict);
         listView.setAdapter(customAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent activityShowContact = new Intent(getApplicationContext(), ActivityViewContact.class);
+                Bundle contactDetails = new Bundle();
+
+                contactDetails.putString("NAME", name[position]);
+                contactDetails.putString("DESCRIPTION", description[position]);
+                contactDetails.putInt("IMG", profilerPict[position]);
+
+                activityShowContact.putExtras(contactDetails);
+                startActivity(activityShowContact);
+            }
+        });
     }
 }
 
